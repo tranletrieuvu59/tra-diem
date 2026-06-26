@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tra cứu điểm Tây Ninh</title>
+<style>
+body { font-family: Arial; text-align:center; margin-top:50px; }
+input,button { padding:10px; margin:5px; }
+pre { background:#111; color:#0f0; padding:10px; width:80%; margin:auto; }
+</style>
+</head>
+<body>
+
+<h2>TRA CỨU ĐIỂM THI</h2>
+
+<input id="sbd" placeholder="Nhập SBD">
+<button onclick="tra()">Tra cứu</button>
+
+<pre id="kq">Chưa tra cứu</pre>
+
+<script>
+async function tra() {
+    const sbd = document.getElementById("sbd").value;
+
+    // test trực tiếp API (nếu bị CORS sẽ lỗi)
+    const url = "https://tuyensinh.tayninh.edu.vn/TuyenSinh/GetThongTinHocSinhTheoSoBaoDanh?soBaoDanh=" + sbd;
+
+    document.getElementById("kq").innerText = "Đang tải...";
+
+    try {
+        const res = await fetch(url);
+        const text = await res.text();
+
+        document.getElementById("kq").innerText = text;
+
+    } catch (e) {
+        document.getElementById("kq").innerText = "Lỗi CORS hoặc bị chặn: " + e.message;
+    }
+}
+</script>
+
+</body>
+</html>
